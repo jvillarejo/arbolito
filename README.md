@@ -1,22 +1,10 @@
 # Arbolito
 
-Arbolito is a minimalist  ruby API for currency conversions, it has no dependencies except the Ruby Standard Library
+Arbolito is a minimalist Ruby API for currency conversions, it has no dependencies except the Ruby Standard Library.
 
-## Installation
+It's like your Florida street best companion!
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'arbolito'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install arbolito
+![Florida Street](http://i.imgur.com/qupBCJN.jpg)
 
 ## Features
   * Doesn't encapsulates the currencies in any object model, it just use `BigDecimal` class and `Hash`
@@ -35,6 +23,19 @@ The second reason is that other gems implements their own money or currency mode
 
 The API just receives a Big Decimal and a hash describing the conversion
 
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'arbolito'
+```
+And then execute:
+
+    $ bundle
+Or install it yourself as:
+
+    $ gem install arbolito
 ## Usage
 
 ``` ruby 
