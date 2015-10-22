@@ -2,6 +2,7 @@ require 'bigdecimal'
 require 'time'
 require 'arbolito/currency/quote'
 require 'arbolito/currency/rate'
+require 'arbolito/store/memory'
 require 'arbolito/exchange/yahoo_finance'
 require "arbolito/version"
 
@@ -14,13 +15,13 @@ module Arbolito
     end
 
     def current_rate(from_to_currencies) 
-      get_from_store(Currency::Quote.new(from_to_currencies)).price
+      fetch(Currency::Quote.new(from_to_currencies)).price
     end
 
     def convert(money, from_to_currencies)
       quote = Currency::Quote.new(from_to_currencies)
 
-      rate = get_from_store(quote)
+      rate = fetch(quote)
 
       rate.convert(money)
     end
@@ -31,26 +32,24 @@ module Arbolito
 
     private
     def add_to_store(rate)
-      store[rate.quote.to_hash] = rate
-        
-      backwards_rate = rate.backwards
-      store[backwards_rate.quote.to_hash] = backwards_rate
+      store.add(rate)
+      store.add(rate.backwards)
     end
 
-    def get_from_store(quote)
-      rate = store[quote.to_hash]
+    def fetch(quote)
+      rate = store.fetch(quote)
 
       if(!rate)
         rate = exchange.find_current_rate(quote)
 
-        add_to_store(rate)
+        store.add(rate)
       end
 
       rate
     end
 
     def store
-      @@store ||= {}
+      @@store ||= Store::Memory
     end
 
     def exchange
