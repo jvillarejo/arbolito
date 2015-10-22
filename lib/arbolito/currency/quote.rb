@@ -19,7 +19,7 @@ module Arbolito
       end
 
       def ==(other_currency_quote)
-        raise TypeError unless other_currency_quote.is_a?(CurrencyQuote)
+        raise TypeError unless other_currency_quote.is_a?(Quote)
 
         @from == other_currency_quote.from && @to == other_currency_quote.to
       end

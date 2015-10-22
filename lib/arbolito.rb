@@ -1,4 +1,5 @@
 require 'bigdecimal'
+require 'time'
 require 'arbolito/currency/quote'
 require 'arbolito/currency/rate'
 require 'arbolito/exchange/yahoo_finance'
