@@ -1,6 +1,7 @@
 require 'bigdecimal'
 require 'arbolito/currency/quote'
 require 'arbolito/currency/rate'
+require 'arbolito/exchange/yahoo_finance'
 require "arbolito/version"
 
 module Arbolito
@@ -18,14 +19,23 @@ module Arbolito
       store[Currency::Quote.new(from_to_currencies).to_hash].price
     end
 
-    def exchange(money, from_to_currencies)
+    def convert(money, from_to_currencies)
       quote = Currency::Quote.new(from_to_currencies)
 
       store[quote.to_hash].convert(money)
     end
 
+    def exchange=(exchange)
+      @@exchange = exchange
+    end
+    
+    private
     def store
       @@store ||= {}
+    end
+
+    def exchange
+      @@exchange = Exchange::YahooFinance.new
     end
   end
 end

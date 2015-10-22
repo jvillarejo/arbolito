@@ -17,11 +17,15 @@ describe Arbolito do
     expect(Arbolito.current_rate('ARS' => 'USD')).to eq(BigDecimal.new(1) / BigDecimal.new(15))
   end
 
-  it 'can exchange the money with the current currency rate' do
-    expect(Arbolito.exchange(BigDecimal.new(100), 'USD' => 'ARS')).to eq(BigDecimal.new(1500))
+  it 'can convert the money with the current currency rate' do
+    expect(Arbolito.convert(BigDecimal.new(100), 'USD' => 'ARS')).to eq(BigDecimal.new(1500))
   end
 
-  it 'can exchange the money backwards with the current currency rate' do
-    expect(Arbolito.exchange(BigDecimal.new(1500), 'ARS' => 'USD')).to eq(BigDecimal.new(1500) * (BigDecimal.new(1) / BigDecimal.new(15)))
+  it 'can convert the money backwards with the current currency rate' do
+    expect(Arbolito.convert(BigDecimal.new(1500), 'ARS' => 'USD')).to eq(BigDecimal.new(1500) * (BigDecimal.new(1) / BigDecimal.new(15)))
+  end
+
+  it 'can give you the currency rate using yahoo finance api' do 
+    expect(Arbolito.current_rate('UYU' => 'USD')).to be_instance(BigDecimal.new(1) / BigDecimal.new(15))
   end
 end
