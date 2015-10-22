@@ -30,6 +30,10 @@ module Arbolito
       @@exchange = exchange
     end
 
+    def expiration_time=(seconds)
+      @@expiration_time = seconds
+    end
+
     private
     def add_to_store(rate)
       store.add(rate)
@@ -53,7 +57,7 @@ module Arbolito
     end
 
     def exchange
-      @@exchange ||= Exchange::YahooFinance.new
+      @@exchange ||= Exchange::YahooFinance
     end
   end
 end

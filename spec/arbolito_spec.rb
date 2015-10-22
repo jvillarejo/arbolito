@@ -31,4 +31,10 @@ describe Arbolito do
     expect(price).to be_instance_of(BigDecimal)
     expect(price).to be > 0
   end
+
+  it 'fetches a new rate when setting an expiration date' do 
+    Arbolito.expiration_time = 60
+
+
+  end
 end
