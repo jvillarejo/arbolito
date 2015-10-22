@@ -14,13 +14,15 @@ module Arbolito
     end
 
     def current_rate(from_to_currencies) 
-      store[Currency::Quote.new(from_to_currencies).to_hash].price
+      get_from_store(Currency::Quote.new(from_to_currencies)).price
     end
 
     def convert(money, from_to_currencies)
       quote = Currency::Quote.new(from_to_currencies)
 
-      store[quote.to_hash].convert(money)
+      rate = get_from_store(quote)
+
+      rate.convert(money)
     end
 
     def exchange=(exchange)
@@ -35,12 +37,24 @@ module Arbolito
       store[backwards_rate.quote.to_hash] = backwards_rate
     end
 
+    def get_from_store(quote)
+      rate = store[quote.to_hash]
+
+      if(!rate)
+        rate = exchange.find_current_rate(quote)
+
+        add_to_store(rate)
+      end
+
+      rate
+    end
+
     def store
       @@store ||= {}
     end
 
     def exchange
-      @@exchange = Exchange::YahooFinance.new
+      @@exchange ||= Exchange::YahooFinance.new
     end
   end
 end

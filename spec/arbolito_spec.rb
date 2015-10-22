@@ -26,6 +26,9 @@ describe Arbolito do
   end
 
   it 'can give you the currency rate using yahoo finance api' do 
- #   expect(Arbolito.current_rate('UYU' => 'USD')).to be_instance(BigDecimal.new(1) / BigDecimal.new(15))
+    price = Arbolito.current_rate('USD' => 'UYU')
+
+    expect(price).to be_instance_of(BigDecimal)
+    expect(price).to be > 0
   end
 end
