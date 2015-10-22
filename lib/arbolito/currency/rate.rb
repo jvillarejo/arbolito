@@ -8,6 +8,10 @@ module Arbolito
         @price = BigDecimal.new(price)
       end
 
+      def convert(money)
+        @price * BigDecimal.new(money)
+      end
+      
       def backwards
         Rate.new(BigDecimal.new(1) / @price, @quote.backwards.to_hash)
       end

@@ -8,20 +8,20 @@ module Arbolito
   class << self
     def add_currency_rate(currency_price, from_to_currencies)
       rate = Currency::Rate.new(currency_price, from_to_currencies) 
-      store[rate.quote.to_hash] = rate.price
+      store[rate.quote.to_hash] = rate
         
       backwards_rate = rate.backwards
-      store[backwards_rate.quote.to_hash] = backwards_rate.price
+      store[backwards_rate.quote.to_hash] = backwards_rate
     end
 
     def current_rate(from_to_currencies) 
-      store[Currency::Quote.new(from_to_currencies).to_hash]
+      store[Currency::Quote.new(from_to_currencies).to_hash].price
     end
 
     def exchange(money, from_to_currencies)
       quote = Currency::Quote.new(from_to_currencies)
 
-      store[quote.to_hash] * BigDecimal.new(money)
+      store[quote.to_hash].convert(money)
     end
 
     def store
