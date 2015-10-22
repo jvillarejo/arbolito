@@ -18,6 +18,12 @@ module Arbolito
       store[Currency::Quote.new(from_to_currencies).to_hash]
     end
 
+    def exchange(money, from_to_currencies)
+      quote = Currency::Quote.new(from_to_currencies)
+
+      store[quote.to_hash] * BigDecimal.new(money)
+    end
+
     def store
       @@store ||= {}
     end
