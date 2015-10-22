@@ -18,6 +18,12 @@ module Arbolito
           end
         end
 
+        def clear
+          synchronize do 
+            @@hash = {}
+          end
+        end
+
         def synchronize(&block)
           mutex.synchronize(&block)
         end

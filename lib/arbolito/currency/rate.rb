@@ -14,7 +14,11 @@ module Arbolito
       end
 
       def backwards
-        Rate.new(BigDecimal.new(1) / @price, @quote.backwards.to_hash)
+        self.class.new(BigDecimal.new(1) / @price, @quote.backwards.to_hash)
+      end
+
+      def expired?(expiration_time)
+        (Time.now - rated_at) > expiration_time
       end
 
       def ==(other_currency_rate)

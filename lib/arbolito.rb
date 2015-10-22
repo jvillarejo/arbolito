@@ -2,6 +2,7 @@ require 'bigdecimal'
 require 'time'
 require 'arbolito/currency/quote'
 require 'arbolito/currency/rate'
+require 'arbolito/currency/non_expirable_rate'
 require 'arbolito/store/memory'
 require 'arbolito/exchange/yahoo_finance'
 require "arbolito/version"
@@ -10,7 +11,7 @@ module Arbolito
 
   class << self
     def add_currency_rate(currency_price, from_to_currencies)
-      rate = Currency::Rate.new(currency_price, from_to_currencies) 
+      rate = Currency::NonExpirableRate.new(currency_price, from_to_currencies) 
       add_to_store(rate)
     end
 
@@ -43,7 +44,7 @@ module Arbolito
     def fetch(quote)
       rate = store.fetch(quote)
 
-      if(!rate)
+      if(!rate || rate.expired?(expiration_time))
         rate = exchange.find_current_rate(quote)
 
         store.add(rate)
@@ -58,6 +59,10 @@ module Arbolito
 
     def exchange
       @@exchange ||= Exchange::YahooFinance
+    end
+
+    def expiration_time
+      @@expiration_time ||= 60
     end
   end
 end
