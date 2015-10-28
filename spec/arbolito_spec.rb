@@ -5,7 +5,7 @@ describe Arbolito do
     expect(Arbolito::VERSION).not_to be nil
   end
 
-  context 'when adding a currency rate manually' do
+  describe 'adding a currency rate manually' do
     before { Arbolito.add_currency_rate(BigDecimal.new(15), 'USD' => 'ARS') }
   
     it 'lets you add fixed currency quotes' do
@@ -25,7 +25,7 @@ describe Arbolito do
     end
   end
 
-  context 'when fetching for the currency rate remotely' do 
+  describe 'fetching for the currency rate remotely' do 
     it 'can give you the currency rate using yahoo finance api' do 
       price = Arbolito.current_rate('USD' => 'UYU')
 
