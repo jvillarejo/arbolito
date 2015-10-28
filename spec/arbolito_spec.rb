@@ -25,6 +25,27 @@ describe Arbolito do
     end
   end
 
+  describe 'configuring arbolito' do 
+    it 'can set the expiration time' do 
+      Arbolito.set(:expiration_time, 24*60*60)
+
+      expect(Arbolito.settings[:expiration_time]).to eq(24*60*60)
+    end
+
+    it 'can set the exchange' do 
+      Arbolito.set(:exchange, Arbolito::Exchange::YahooFinance)
+
+      expect(Arbolito.settings[:exchange]).to eq(Arbolito::Exchange::YahooFinance)
+
+    end
+
+    it 'can set the store' do 
+      Arbolito.set(:store, Arbolito::Store::Memory)
+
+      expect(Arbolito.settings[:store]).to eq(Arbolito::Store::Memory)
+    end
+  end
+
   describe 'fetching for the currency rate remotely' do 
     it 'can give you the currency rate using yahoo finance api' do 
       price = Arbolito.current_rate('USD' => 'UYU')
@@ -34,14 +55,14 @@ describe Arbolito do
     end
 
     context 'when setting an expiration time' do 
+      let(:spy) { spy = ExchangeSpy.new  }
+      
       before do 
-        Arbolito.expiration_time = 5
+        Arbolito.set(:expiration_time,5)
+        Arbolito.set(:exchange, spy)
       end
 
       it 'retrieves the same rate when time hasn\'t expired' do 
-        spy = ExchangeSpy.new 
-        Arbolito.exchange = spy
-
         Arbolito.current_rate('USD' => 'ARS')
         Arbolito.current_rate('USD' => 'ARS')
 
@@ -49,9 +70,6 @@ describe Arbolito do
       end
 
       it 'fetches a new rate when time expired' do 
-        spy = ExchangeSpy.new 
-        Arbolito.exchange = spy
-
         Arbolito.current_rate('USD' => 'ARS')
         sleep(6)
         
@@ -61,4 +79,6 @@ describe Arbolito do
       end
     end
   end
+
+  
 end

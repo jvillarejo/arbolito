@@ -27,12 +27,12 @@ module Arbolito
       rate.convert(money)
     end
 
-    def exchange=(exchange)
-      @@exchange = exchange
+    def settings
+      @settings ||= {}
     end
 
-    def expiration_time=(seconds)
-      @@expiration_time = seconds
+    def set(config_key, value)
+      settings[config_key] = value
     end
 
     private
@@ -54,15 +54,15 @@ module Arbolito
     end
 
     def store
-      @@store ||= Store::Memory
+      settings[:store] ||= Store::Memory
     end
 
     def exchange
-      @@exchange ||= Exchange::YahooFinance
+      settings[:exchange] ||= Exchange::YahooFinance
     end
 
     def expiration_time
-      @@expiration_time ||= 60
+      settings[:expiration_time] ||= 60
     end
   end
 end
