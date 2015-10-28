@@ -13,6 +13,7 @@ It's like your Florida street best companion!
   * You implement your own exchange and configure it
   * It stores in memory the rates fetched with a configurable expiration time
   * You can implement your own store and configure it
+  * All the examples use the ISO 4217 code list for Currencies
 
 ## Motivation
 There were two reason why I've developed this gem. 
@@ -71,7 +72,20 @@ Arbolito.current_rate('UYU' => 'USD')
 Arbolito.convert(BigDecimal.new(100), 'USD' => 'CLP')
 => #<BigDecimal:7f061f35e680,'0.689695E5',18(36)>
 
+# We can configure Arbolito expiration in seconds
+Arbolito.set(:expiration_time, 5 * 60)
+
+# We can implement our own Exchange and configure it in Arbolito 
+Arbolito.set(:exchange, Exchange::FloridaStreet)
+
+# We can implement our own Store and configure it in Arbolito 
+Arbolito.set(:store, Store::Mongo)
+
 ```
+
+## Implementing Store and Exchange
+
+Please take a look at the code to see how you can implement your own stores and exchanges.
 
 ## Contributing
 
