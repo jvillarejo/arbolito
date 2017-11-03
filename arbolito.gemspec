@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email         = ["contact@jonvillage.com"]
 
   s.summary       = "A currency conversion api for the minimalist developer"
-  s.description   = s.summary
+  s.description   = "A currency conversion that fetch from external source and also let's you add a fixed rate for different currencies"
   s.homepage      = "https://github.com/jvillarejo/arbolito.git"
   s.license       = "MIT"
   s.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
