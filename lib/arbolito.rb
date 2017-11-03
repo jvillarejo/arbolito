@@ -5,6 +5,7 @@ require 'arbolito/currency/rate'
 require 'arbolito/currency/non_expirable_rate'
 require 'arbolito/store/memory'
 require 'arbolito/exchange/yahoo_finance'
+require 'arbolito/exchange/alpha_vantage'
 require "arbolito/version"
 
 module Arbolito

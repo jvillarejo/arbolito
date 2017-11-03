@@ -34,9 +34,15 @@ describe Arbolito do
 
     it 'can set the exchange' do 
       Arbolito.set(:exchange, Arbolito::Exchange::YahooFinance)
-
+      
       expect(Arbolito.settings[:exchange]).to eq(Arbolito::Exchange::YahooFinance)
+    end
 
+    it 'can set the exchange with api key' do 
+      Arbolito.set(:exchange, Arbolito::Exchange::AlphaVantage.new('asfakshfjkashfj')) 
+
+      expect(Arbolito.settings[:exchange]).to be_a(Arbolito::Exchange::AlphaVantage)
+      expect(Arbolito.settings[:exchange].api_key).to eq('asfakshfjkashfj')
     end
 
     it 'can set the store' do 
@@ -47,7 +53,9 @@ describe Arbolito do
   end
 
   describe 'fetching for the currency rate remotely' do 
-    it 'can give you the currency rate using yahoo finance api' do 
+    it 'can give you the currency rate using alpha vantage api' do 
+      Arbolito.set(:exchange, Arbolito::Exchange::AlphaVantage.new(ENV['ALPHA_VANTAGE_API_KEY'])) 
+
       price = Arbolito.current_rate('USD' => 'UYU')
 
       expect(price).to be_instance_of(BigDecimal)
@@ -55,7 +63,7 @@ describe Arbolito do
     end
 
     context 'when setting an expiration time' do 
-      let(:spy) { spy = ExchangeSpy.new  }
+      let(:spy) { Arbolito::Exchange::Spy.new }
       
       before do 
         Arbolito.set(:expiration_time,5)

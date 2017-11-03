@@ -9,7 +9,7 @@ It's like your Florida street best companion!
 ## Features
   * Doesn't encapsulates the currencies in any object model, it just use `BigDecimal` class and `Hash`
   * You can add manually price rates 
-  * If the rate isn't found it fetches the rate using Yahoo Finance API as exchange
+  * If the rate isn't found it fetches the rate using Yahoo Finance API as exchange or you can implement your own exchange.
   * You implement your own exchange and configure it
   * It stores in memory the rates fetched with a configurable expiration time
   * You can implement your own store and configure it
@@ -81,6 +81,16 @@ Arbolito.set(:exchange, Exchange::FloridaStreet)
 # We can implement our own Store and configure it in Arbolito 
 Arbolito.set(:store, Store::Mongo)
 
+```
+
+# Update: 2017-11-03 
+Yahoo discountinued their Yahoo Finance API so I've implemented another Exchange (Alpha Vantage)[https://www.alphavantage.co/]. 
+
+To use you need to get an API Key from them and the configure it like this. 
+
+```ruby
+api_key = ENV['API_KEY']
+Arbolito.set(:exchange, Arbolito::Exchange::AlphaVantage.new(api_key))
 ```
 
 ## Implementing Store and Exchange
