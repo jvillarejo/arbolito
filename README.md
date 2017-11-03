@@ -84,7 +84,7 @@ Arbolito.set(:store, Store::Mongo)
 ```
 
 # Update: 2017-11-03 
-Yahoo discountinued their Yahoo Finance API so I've implemented another Exchange (Alpha Vantage)[https://www.alphavantage.co/]. 
+Yahoo discountinued their Yahoo Finance API so I've implemented another Exchange [Alpha Vantage](https://www.alphavantage.co/).
 
 To use you need to get an API Key from them and the configure it like this. 
 
