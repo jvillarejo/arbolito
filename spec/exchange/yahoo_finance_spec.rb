@@ -1,7 +1,7 @@
 require 'spec_helper' 
 
 describe Arbolito::Exchange::YahooFinance do 
-  subject(:exchange) { Arbolito::Exchange::YahooFinance.new }
+  subject(:exchange) { Arbolito::Exchange::YahooFinance }
   let(:quote) { Arbolito::Currency::Quote.new('USD' => 'UYU') }
 
   # DEPRECATED Yahoo doesn't support anymore Yahoo Finance so use Alpha Vantage instead
